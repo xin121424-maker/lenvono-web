@@ -1,24 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { SiteFooter } from "./components/SiteFooter";
+import { SiteHeader } from "./components/SiteHeader";
 
 const slides = [
   {
-    image: "https://picsum.photos/id/26/1920/1080",
+    image: "/hero-activity-2026.jpg",
     title: "2026暑期实习特训营",
     subtitle: "青年成长实践平台",
     action: "查看活动详情",
     target: "#project",
   },
   {
-    image: "https://picsum.photos/id/96/1920/1080",
+    image: "/hero-charity.jpg",
     title: "美好假期大学生温暖公益行",
     subtitle: "返家乡，助力少年成长",
     action: "了解公益项目",
     target: "#project",
   },
   {
-    image: "https://picsum.photos/id/42/1920/1080",
+    image: "/hero-anniversary.jpg",
     title: "idea精英汇18周年",
     subtitle: "汇聚青年力量",
     action: "查看更多",
@@ -33,17 +35,10 @@ const learningResources = [
   { category: "社团专项", icon: "专", title: "社团专项", description: "公益项目执行、赛事落地执行手册" },
 ];
 
-const navItems = [
-  ["首页", "#home"], ["社团介绍", "#about"], ["技能学习库", "#learn"],
-  ["活动中心", "#activity"], ["专项项目", "#project"], ["组织架构", "#team"],
-  ["招新报名", "#join"], ["联系我们", "#contact"],
-];
-
 export default function Home() {
   const [slide, setSlide] = useState(0);
   const [learningTab, setLearningTab] = useState("全部资源");
   const [activityTab, setActivityTab] = useState<"活动预告" | "活动回顾">("活动预告");
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = window.setInterval(() => setSlide((value) => (value + 1) % slides.length), 5000);
@@ -56,17 +51,7 @@ export default function Home() {
 
   return (
     <main>
-      <header className="site-header">
-        <a className="brand" href="#home" aria-label="idea精英汇首页">
-          <span className="brand-mark">i</span><span>idea 精英汇</span>
-        </a>
-        <nav className={menuOpen ? "nav-list is-open" : "nav-list"} aria-label="主导航">
-          {navItems.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
-        </nav>
-        <button className="menu-button" type="button" aria-label="打开导航" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>
-          <span></span><span></span>
-        </button>
-      </header>
+      <SiteHeader home />
 
       <section className="hero" id="home" aria-label="活动焦点">
         {slides.map((item, index) => (
@@ -106,13 +91,13 @@ export default function Home() {
         <div className="page-shell">
           <SectionHeading eyebrow="ABOUT US" title="社团介绍" description="一群有理想的年轻人，在这里相遇、成长、创造" />
           <div className="about-layout">
-            <article className="about-feature">
+            <a className="about-feature about-entry" href="/about">
               <span className="feature-number">18</span>
-              <div><span className="mini-label">YEARS TOGETHER</span><h3>社团背景</h3><p>联想idea精英汇，团中央认证青少年实习基地，面向全国高校学生实践社团。</p></div>
-            </article>
+              <div><span className="mini-label">YEARS TOGETHER</span><h3>社团背景</h3><p>了解 idea 精英汇的起点与故事</p><span className="about-entry-link">了解更多 <b>→</b></span></div>
+            </a>
             <div className="about-stack">
-              <article className="info-panel"><span className="panel-number">01</span><div><h3>学生收获</h3><p>校园活动实践、实习机会、公益项目经历、职场技能培训、行业资源对接。</p></div></article>
-              <article className="info-panel"><span className="panel-number">02</span><div><h3>荣誉资质</h3><p>多家媒体报道，多项青年实践项目落地。</p></div></article>
+              <a className="info-panel about-entry" href="/growth"><span className="panel-number">01</span><div><h3>学生成长</h3><p>从校园实践到职业成长，探索属于你的成长可能</p><span className="about-entry-link">探索成长 <b>→</b></span></div></a>
+              <a className="info-panel about-entry" href="/impact"><span className="panel-number">02</span><div><h3>组织影响力</h3><p>从全国高校网络到品牌项目，看见 idea 精英汇的影响力</p><span className="about-entry-link">查看影响力 <b>→</b></span></div></a>
             </div>
           </div>
         </div>
@@ -179,14 +164,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer id="contact">
-        <div className="page-shell footer-grid">
-          <div><a className="brand footer-brand" href="#home"><span className="brand-mark">i</span><span>idea 精英汇</span></a><p>青年成长实践平台</p></div>
-          <div><span className="footer-label">联系我们</span><h3>公众号 / 社群二维码位置<br />邮箱填写处</h3></div>
-          <div className="qr-placeholder">二维码</div>
-        </div>
-        <div className="page-shell footer-bottom"><span>版权说明：所有实拍图片未经授权禁止盗用。</span><span>实习、公益项目以当期官方通知为准，谨防诈骗。</span></div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
